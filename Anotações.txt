@@ -1,0 +1,23 @@
+@Controller: associada com classes que possuem métodos que processam requests numa aplicação web. Meu comentário: É geralmente a classe que tem o RequestMapping e tal
+
+@RestController: igual o controller, mas retorna um JSON, entao é melhor usar @RestController
+
+@Component: é um estereótipo genérico para qualquer componente gerenciado pelo Spring; Meu comentário: Só fala pro spring que essa classe vai ser usada com ele.
+
+@Service faz anotações de classes na camada de serviço; Meu comentário: sei lá o que é camada de serviço
+
+@Repository anota classes na camada de persistência, que atuará como um repositório de banco de dados, além de capturar exceções específicas de persistência e repeti-las novamente como uma das exceções não verificadas e unificadas do Spring. Meu comentário: Tem que usar isso no DAO.
+
+@SpringBootApplication: mesma coisa que usar @Configuration, @EnableAutoConfigation e @ComponentScan
+
+
+
+---------------
+
+PADRÕES RESTful
+
+Usar endpoints no plural ("student" vira "students")
+
+sempre que for um get, deixar na raiz do endpoint.
+Exemplo: se quer estudantes, nao precisa fazer um students/list. Só deixar o get no students mesmo
+
