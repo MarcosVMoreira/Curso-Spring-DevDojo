@@ -5,10 +5,7 @@ import br.com.devdojo.model.Student;
 import br.com.devdojo.util.DateUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -25,7 +22,7 @@ public class StudentEndpoint {
         this.dateUtil = dateUtil;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public ResponseEntity<?> listAll() {
 
         System.out.println("Data e hora vindo do initializr: "+dateUtil.formatLocalDateToDatabaseStyle(LocalDateTime.now()));
@@ -33,7 +30,7 @@ public class StudentEndpoint {
 
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/{id}")
+    @GetMapping(path = "/{id}")
     public ResponseEntity<?> getStudentById(@PathVariable("id") int id) {
         Student student = new Student();
         student.setId(id);
@@ -43,6 +40,26 @@ public class StudentEndpoint {
         }
         return new ResponseEntity<>(Student.studentList.get(index), HttpStatus.OK);
     }
+
+    @PostMapping
+    public ResponseEntity<?> save(@RequestBody Student student) {
+        Student.studentList.add(student);
+        return new ResponseEntity<>(student, HttpStatus.OK);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<?> delete(@RequestBody Student student) {
+        Student.studentList.remove(student);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping
+    public ResponseEntity<?> update(@RequestBody Student student) {
+        Student.studentList.remove(student);
+        Student.studentList.add(student);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 
 }
 
