@@ -10,7 +10,7 @@
 
 @SpringBootApplication: mesma coisa que usar @Configuration, @EnableAutoConfigation e @ComponentScan
 
-
+@MappedSuperclass informa que a classe nao é pra ser mapeada no banco de dados, que só é uma classe de negócio para ser extendida
 
 ---------------
 
@@ -21,3 +21,5 @@ Usar endpoints no plural ("student" vira "students")
 sempre que for um get, deixar na raiz do endpoint.
 Exemplo: se quer estudantes, nao precisa fazer um students/list. Só deixar o get no students mesmo
 
+
+------------
