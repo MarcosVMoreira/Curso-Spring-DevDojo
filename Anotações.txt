@@ -4,6 +4,8 @@ Plugin Builder Generator (Aula 11)
 
 ------------
 
+@Entity: faz uma ligacao entre a classe que leva essa notacao e o banco de dados, criando uma tabela no banco com esse mesmo nome e com campos de acordo com as variaveis definidas nesta classe
+
 @Controller: associada com classes que possuem métodos que processam requests numa aplicação web. Meu comentário: É geralmente a classe que tem o RequestMapping e tal
 
 @RestController: igual o controller, mas retorna um JSON, entao é melhor usar @RestController
@@ -21,6 +23,12 @@ Plugin Builder Generator (Aula 11)
 @ControllerAdvice allows you to handle exceptions across the whole application, not just to an individual controller.
 
 @Transactional faz um rollback no banco de dados quando dentro de um método voce faz alguma alteracao no banco e esse método posteriormente quebra por algum motivo que nao foi na hora de modificar o banco, retornando um erro. Como o método quebrou (lançou throw), nao podemos persistir as alteracoes no banco, entao esse Transactional anotado no método desfaz as alteracoes. Pra isso, precisa usar banco que suporta Transactional. Apenas o InnoDB pra windows suporta. Pra criar tabelas com InnoDB, tem que setar no applcation.properties spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.MySQL5InnoDBDialect  (notar na ultima palavra, que normalmente vem como MySQL5Dialect. Tem que inserir o InnoDB no meio)
+
+@NotEmpty usado no model pra nao permitir campos vazios
+Além de NotEmpty, existem varios outros validators. Um, por exemplo, é @Email
+
+@Valid normalmente se usa no endpoint que está recebendo um parâmetro, para validar se o parametro é valido com base no model anotado com tag @NotEmpty
+
 
 
 
