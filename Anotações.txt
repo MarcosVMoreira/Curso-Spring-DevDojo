@@ -30,6 +30,15 @@ Além de NotEmpty, existem varios outros validators. Um, por exemplo, é @Email
 @Valid normalmente se usa no endpoint que está recebendo um parâmetro, para validar se o parametro é valido com base no model anotado com tag @NotEmpty
 
 
+---------------
+
+Tratamento de exceção:
+na classe ResponseEntityExceptionHanler.class, do Spring, ele faz por default o tratamento da grande maioria das exceptions lançadas pelo HTTP
+Caso queira sobrescrever algum tratamento em específico, é só extender essa classe num ExceptionHandler que eu mesmo criar (exemplo do 
+handleArgumentNotValidException do RestExceptionHandler.java
+
+Importante: nao é possivel usar mais de um @ExceptionHandler quando dou extends no ResponseEntityExceptionHandler porque dá problema
+
 
 
 ---------------
@@ -40,6 +49,8 @@ Usar endpoints no plural ("student" vira "students")
 
 sempre que for um get, deixar na raiz do endpoint.
 Exemplo: se quer estudantes, nao precisa fazer um students/list. Só deixar o get no students mesmo
+
+Para tratar um erro geral, extender ResponseEntityExceptionHandler e sobrescrever handleExceptionInternal
 
 
 ------------
