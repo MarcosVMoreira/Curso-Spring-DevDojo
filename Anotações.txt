@@ -1,4 +1,14 @@
+
+
+SET @@global.time_zone = '+3:00';
+
+------------
+
+
 Dependencias do projeto:
+
+Spring Boot, Spring Data, JPA, Spring Secutiry
+
 Plugin Builder Generator (Aula 11)
 
 
@@ -74,10 +84,12 @@ tambem. A partir dai, ja comeca a retornar páginas e é possivel controlar pass
 
 Para mudar quantos elementos aparecem por página é necessário utilizar o Adapter, implementando o WebMvcConfigurer e usando addArgumentResolvers, igual pode ser visto no commit Paginacao em requisicoes REST
 
+Sorting de paginacao:
+
+Só adicionar os parametros do sorting no final da URL. Exemplo: localhost:8080/students?sort=name,asc&sort=email,desc
+
 ------------
 
-
-SET @@global.time_zone = '+3:00';
 
 
 -------------
