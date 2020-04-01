@@ -20,6 +20,8 @@ Atalhos:
 ctrl + alt + O remove imports nao utilizados
 alt + shift + B gera o builder
 
+ctrl + / comenta
+
 
 
 ------------
