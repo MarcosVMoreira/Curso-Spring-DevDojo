@@ -4,6 +4,16 @@ Plugin Builder Generator (Aula 11)
 
 ------------
 
+Atalhos:
+
+
+ctrl + alt + O remove imports nao utilizados
+alt + shift + B gera o builder
+
+
+
+------------
+
 @Entity: faz uma ligacao entre a classe que leva essa notacao e o banco de dados, criando uma tabela no banco com esse mesmo nome e com campos de acordo com as variaveis definidas nesta classe
 
 @Controller: associada com classes que possuem métodos que processam requests numa aplicação web. Meu comentário: É geralmente a classe que tem o RequestMapping e tal
@@ -33,6 +43,7 @@ Além de NotEmpty, existem varios outros validators. Um, por exemplo, é @Email
 ---------------
 
 Tratamento de exceção:
+
 na classe ResponseEntityExceptionHanler.class, do Spring, ele faz por default o tratamento da grande maioria das exceptions lançadas pelo HTTP
 Caso queira sobrescrever algum tratamento em específico, é só extender essa classe num ExceptionHandler que eu mesmo criar (exemplo do 
 handleArgumentNotValidException do RestExceptionHandler.java
@@ -52,6 +63,16 @@ Exemplo: se quer estudantes, nao precisa fazer um students/list. Só deixar o ge
 
 Para tratar um erro geral, extender ResponseEntityExceptionHandler e sobrescrever handleExceptionInternal
 
+
+------------
+
+paginação:
+
+geralmente utilizado pra limitar os dados que sao enviados. Se um cara ta no mobile e usando dados moveis, por ex, vai queimar os dados moveis do cara. Entao é bom limitar o tanto de dados que o usuario recebe.
+Pra isso, coloquei extends PagingAndSortingRepository no StudentRepository e no ListAll do endpoint passei como parametro o Pageable pageable e no studentDAO.findAll(pageable)
+tambem. A partir dai, ja comeca a retornar páginas e é possivel controlar passando os parametros page=0 e size=5 da seguinte forma: localhost:8080/students?page=0&size=5
+
+Para mudar quantos elementos aparecem por página é necessário utilizar o Adapter, implementando o WebMvcConfigurer e usando addArgumentResolvers, igual pode ser visto no commit Paginacao em requisicoes REST
 
 ------------
 
