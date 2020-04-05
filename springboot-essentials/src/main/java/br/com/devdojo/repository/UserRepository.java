@@ -1,4 +1,4 @@
-package br.com.devdojo.Repository;
+package br.com.devdojo.repository;
 
 
 import br.com.devdojo.model.User;

@@ -1,6 +1,6 @@
-package br.com.devdojo.Service;
+package br.com.devdojo.service;
 
-import br.com.devdojo.Repository.UserRepository;
+import br.com.devdojo.repository.UserRepository;
 import br.com.devdojo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;

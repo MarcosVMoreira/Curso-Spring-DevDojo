@@ -1,4 +1,4 @@
-package javaclient;
+package br.com.devdojo.javaclient;
 
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
