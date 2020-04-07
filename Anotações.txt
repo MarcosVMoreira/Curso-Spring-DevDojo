@@ -22,6 +22,8 @@ alt + shift + B gera o builder
 
 ctrl + / comenta
 
+ctrl + shift + E navegar pelos arquivos
+
 
 
 ------------
