@@ -7,7 +7,7 @@ SET @@global.time_zone = '+3:00';
 
 Dependencias do projeto:
 
-Spring Boot, Spring Data, JPA, Spring Secutiry
+Spring Boot, Spring Data, JPA, Spring Secutiry, docker
 
 Plugin Builder Generator (Aula 11)
 
@@ -16,15 +16,19 @@ Plugin Builder Generator (Aula 11)
 
 Atalhos:
 
+ctrl + alt + L auto indent shortcut
 
 ctrl + alt + O remove imports nao utilizados
+
 alt + shift + B gera o builder
 
 ctrl + / comenta
 
 ctrl + shift + E navegar pelos arquivos
 
+ctrl + alt + v cria variavel local
 
+alt + enter cria variavel local
 
 ------------
 

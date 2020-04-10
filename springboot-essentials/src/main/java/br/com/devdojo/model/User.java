@@ -23,6 +23,15 @@ public class User extends AbstractEntity {
     @NotEmpty
     private boolean admin;
 
+    public User (@NotEmpty String username, @NotEmpty String password, @NotEmpty String name, @NotEmpty boolean admin) {
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.admin = admin;
+    }
+
+    public User () {
+    }
 
     public String getUsername () {
         return username;

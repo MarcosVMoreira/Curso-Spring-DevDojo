@@ -25,7 +25,7 @@ public class StudentRepositoryTest {
     private StudentRepository studentRepository;
 
     @Test
-    public void whenCreate_thenPersistData() {
+    public void whenCreate_thenPersistData () {
 
         Student student = new Student("Marcos", "marcos.teste@email.com");
         this.studentRepository.save(student);
@@ -37,7 +37,7 @@ public class StudentRepositoryTest {
     }
 
     @Test
-    public void whenDelete_thenRemoveData() {
+    public void whenDelete_thenRemoveData () {
         Student student = new Student("Marcos", "marcos.teste@email.com");
         this.studentRepository.save(student);
         studentRepository.delete(student);
@@ -46,7 +46,7 @@ public class StudentRepositoryTest {
     }
 
     @Test
-    public void whenUpdate_thenChangeAndPersistData() {
+    public void whenUpdate_thenChangeAndPersistData () {
         Student student = new Student("Marcos", "marcos.teste@email.com");
         this.studentRepository.save(student);
 
@@ -60,7 +60,7 @@ public class StudentRepositoryTest {
     }
 
     @Test
-    public void whenFindByNameIgnoreCaseContaining_thenIgnoreCase() {
+    public void whenFindByNameIgnoreCaseContaining_thenIgnoreCase () {
         Student student1 = new Student("Marcos", "marcos.teste@email.com");
         Student student2 = new Student("marcos", "marcos.teste2@email.com");
 
@@ -74,7 +74,7 @@ public class StudentRepositoryTest {
     }
 
     @Test
-    public void whenNotEmptyName_thenNoConstraintViolations() {
+    public void whenNotEmptyName_thenNoConstraintViolations () {
         Exception exception = assertThrows(
                 ConstraintViolationException.class,
                 () -> studentRepository.save(new Student("", "email@gmail.com")));
@@ -83,7 +83,7 @@ public class StudentRepositoryTest {
     }
 
     @Test
-    public void whenNotEmptyEmail_thenNoConstraintViolations() {
+    public void whenNotEmptyEmail_thenNoConstraintViolations () {
         Exception exception = assertThrows(
                 ConstraintViolationException.class,
                 () -> studentRepository.save(new Student("Marcos", "")));
@@ -92,7 +92,7 @@ public class StudentRepositoryTest {
     }
 
     @Test
-    public void whenValidEmail_thenNoConstraintViolations() {
+    public void whenValidEmail_thenNoConstraintViolations () {
         Exception exception = assertThrows(
                 ConstraintViolationException.class,
                 () -> studentRepository.save(new Student("Marcos", "wrongemail.email")));
