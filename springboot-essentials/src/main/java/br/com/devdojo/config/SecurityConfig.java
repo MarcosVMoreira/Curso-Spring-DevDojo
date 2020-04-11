@@ -34,19 +34,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(customUserDetailsService).passwordEncoder(new BCryptPasswordEncoder());
     }
 
-
-    //    @Autowired
-//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//
-//        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-//
-//        auth.inMemoryAuthentication()
-//                .withUser("marcos").password(encoder.encode("devdojo")).roles("USER")
-//                .and()
-//                .withUser("admin").password(encoder.encode("devdojo")).roles("USER", "ADMIN");
-//
-//
-//
-//    }
-
 }

@@ -33,7 +33,6 @@ public class StudentEndpoint {
 
     @GetMapping(path = "protected/students/{id}")
     public ResponseEntity<?> getStudentById (@PathVariable("id") Long id, @AuthenticationPrincipal UserDetails userDetails) {
-        System.out.println(userDetails);
         verifyIfStudentExists(id);
         Optional<Student> student = studentDAO.findById(id);
         return new ResponseEntity<>(student, HttpStatus.OK);
@@ -46,6 +45,7 @@ public class StudentEndpoint {
 
     @PostMapping(path = "admin/students")
     public ResponseEntity<?> save (@Valid @RequestBody Student student) {
+        System.out.println("param recebido "+student.toString());
         return new ResponseEntity<>(studentDAO.save(student), HttpStatus.CREATED);
     }
 

@@ -1,16 +1,13 @@
 package br.com.devdojo;
 
-import br.com.devdojo.endpoint.StudentEndpoint;
 import br.com.devdojo.model.Student;
-import br.com.devdojo.model.User;
 import br.com.devdojo.repository.StudentRepository;
 import br.com.devdojo.repository.UserRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.stubbing.OngoingStubbing;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -28,9 +25,9 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.web.client.ResourceAccessException;
 
-import javax.validation.ConstraintViolationException;
 import java.util.List;
 
 import static java.util.Arrays.asList;
@@ -38,11 +35,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.springframework.http.HttpMethod.*;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.mockito.Mockito.*;
+import static org.springframework.http.HttpMethod.DELETE;
+import static org.springframework.http.HttpMethod.PUT;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -149,7 +145,93 @@ public class StudentEndpointTest {
         verify(studentRepository).findAll(isA(Pageable.class));
     }
 
-    
+    @Test
+    @WithMockUser(username = "xxx", password = "xxx", roles = {"USER"})
+    public void whenGetStudentByIdUsingCorrectRoleAndStudentDoesntExist_thenReturnStatusCode404 () throws Exception {
+        Student student = new Student(3L, "Legolas", "legolas@lotr.com");
+
+        when(studentRepository.findById(3L)).thenReturn(java.util.Optional.of(student));
+
+        mockMvc.perform(get("http://localhost:8080/v1/protected/students/{id}", 6))
+                .andExpect(status().isNotFound())
+                .andDo(print());
+
+        verify(studentRepository).findById(6L);
+    }
+
+    @Test
+    @WithMockUser(username = "xxx", password = "xxx", roles = {"USER"})
+    public void whenFindStudentsByNameUsingCorrectRole_thenReturnStatusCode200 () throws Exception {
+        List<Student> students = asList(new Student(1L, "Legolas", "legolas@lotr.com"),
+                new Student(2L, "Aragorn", "aragorn@lotr.com"),
+                new Student(3L, "legolas greenleaf", "legolas.gl@lotr.com"));
+
+        when(studentRepository.findByNameIgnoreCaseContaining("legolas")).thenReturn(students);
+
+        mockMvc.perform(get("http://localhost:8080/v1/protected/students/findByName/legolas"))
+                .andExpect(status().isOk())
+                .andDo(print());
+
+        verify(studentRepository).findByNameIgnoreCaseContaining("legolas");
+    }
+
+    @Test
+    @WithMockUser(username = "xxx", password = "xxx", roles = {"ADMIN"})
+    public void whenDeleteUsingCorrectRole_thenReturnStatusCode200 () throws Exception {
+
+        Student student = new Student(3L, "Legolas", "legolas@lotr.com");
+
+        when(studentRepository.findById(3L)).thenReturn(java.util.Optional.of(student));
+
+        doNothing().when(studentRepository).deleteById(3L);
+
+        mockMvc.perform(delete("http://localhost:8080/v1/admin/students/{id}", 3))
+                .andExpect(status().isOk())
+                .andDo(print());
+
+        verify(studentRepository).deleteById(3L);
+    }
+
+    @Test
+    @WithMockUser(username = "xxx", password = "xxx", roles = {"ADMIN"})
+    public void whenDeleteHasRoleAdminAndStudentDontExist_thenReturnStatusCode404 () throws Exception {
+
+        doNothing().when(studentRepository).deleteById(1L);
+
+        mockMvc.perform(delete("http://localhost:8080/v1/admin/students/{id}", 1))
+                .andExpect(status().isNotFound())
+                .andDo(print());
+
+        verify(studentRepository, atLeast(1)).findById(1L);
+    }
+
+    @Test
+    @WithMockUser(username = "xxx", password = "xxx", roles = {"USER"})
+    public void whenDeleteHasRoleUser_thenReturnStatusCode403 () throws Exception {
+        doNothing().when(studentRepository).deleteById(1L);
+
+        mockMvc.perform(delete("http://localhost:8080/v1/admin/students/{id}", 1))
+                .andExpect(status().isForbidden())
+                .andDo(print());
+    }
+
+    @Test
+    @WithMockUser(username = "xxx", password = "xxx", roles = {"ADMIN"})
+    public void whenSaveHasRoleAdminAndStudentIsNull_thenReturnStatusCode404 () throws Exception {
+
+        Student student = new Student(3L, "", "legolas@lotr.com");
+
+        when(studentRepository.save(student)).thenReturn(student);
+
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonString = mapper.writeValueAsString(student);
+
+
+        mockMvc.perform(post("http://localhost:8080/v1/admin/students/").contentType(MediaType.APPLICATION_JSON).content(jsonString))
+                .andExpect(status().isNotFound())
+                .andDo(print());
+    }
+
 
     @Test
     @WithMockUser(username = "xx", password = "xx", roles = "USER")
