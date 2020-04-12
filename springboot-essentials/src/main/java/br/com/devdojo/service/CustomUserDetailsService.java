@@ -1,7 +1,7 @@
 package br.com.devdojo.service;
 
+import br.com.devdojo.model.DBUser;
 import br.com.devdojo.repository.UserRepository;
-import br.com.devdojo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -25,14 +25,14 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername (String username) throws UsernameNotFoundException {
-        User user = Optional.ofNullable(userRepository.findByUsername(username))
+        DBUser DBUser = Optional.ofNullable(userRepository.findByUsername(username))
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
         List<GrantedAuthority> authorityListAdmin = AuthorityUtils.createAuthorityList("ROLE_USER", "ROLE_ADMIN");
         List<GrantedAuthority> authorityListUser = AuthorityUtils.createAuthorityList("ROLE_USER");
 
         return new org.springframework.security.core.userdetails.User
-                (user.getUsername(), user.getPassword(), user.isAdmin() ? authorityListAdmin : authorityListUser);
+                (DBUser.getUsername(), DBUser.getPassword(), DBUser.isAdmin() ? authorityListAdmin : authorityListUser);
     }
 
 }

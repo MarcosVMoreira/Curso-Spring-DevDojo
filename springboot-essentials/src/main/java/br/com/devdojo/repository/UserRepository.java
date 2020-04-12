@@ -1,11 +1,11 @@
 package br.com.devdojo.repository;
 
 
-import br.com.devdojo.model.User;
+import br.com.devdojo.model.DBUser;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
-public interface UserRepository extends PagingAndSortingRepository<User, Long> {
+public interface UserRepository extends PagingAndSortingRepository<DBUser, Long> {
 
-    User findByUsername(String username );
+    DBUser findByUsername(String username );
 
 }

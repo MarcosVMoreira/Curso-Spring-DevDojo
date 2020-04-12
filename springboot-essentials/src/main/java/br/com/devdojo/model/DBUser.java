@@ -7,14 +7,14 @@ import javax.persistence.Entity;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
-public class User extends AbstractEntity {
+public class DBUser extends AbstractEntity {
 
     @NotEmpty
     @Column(unique = true)
     private String username;
 
     @NotEmpty
-    @JsonIgnore
+    //@JsonIgnore
     private String password;
 
     @NotEmpty
@@ -23,14 +23,14 @@ public class User extends AbstractEntity {
     @NotEmpty
     private boolean admin;
 
-    public User (@NotEmpty String username, @NotEmpty String password, @NotEmpty String name, @NotEmpty boolean admin) {
+    public DBUser (@NotEmpty String username, @NotEmpty String password, @NotEmpty String name, @NotEmpty boolean admin) {
         this.username = username;
         this.password = password;
         this.name = name;
         this.admin = admin;
     }
 
-    public User () {
+    public DBUser () {
     }
 
     public String getUsername () {
