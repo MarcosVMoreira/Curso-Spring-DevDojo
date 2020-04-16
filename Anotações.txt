@@ -7,12 +7,33 @@ SET @@global.time_zone = '+3:00';
 
 Dependencias do projeto:
 
-Spring Boot, Spring Data, JPA, Spring Secutiry, docker
+Spring Boot, Spring Data, JPA, Spring Secutiry, docker, swagger2
 
 Plugin Builder Generator (Aula 11)
 
 
 ------------
+
+
+http://localhost:8080/v2/api-docs
+http://localhost:8080/swagger-ui.html
+Documentacao:
+https://www.treinaweb.com.br/blog/documentando-uma-api-spring-boot-com-o-swagger/
+https://github.com/swagger-api/swagger-core/wiki/Annotations
+http://springfox.github.io/springfox/docs/snapshot/#quick-start-guides
+
+
+------------
+
+
+
+para abrir requisicao pra qualquer dominio, usar @CrossOrigin(origins="*")
+para limitar requisicoes para apenas um dominino, utilizar CrossOrigin(origins="O_DOMINIO_PERMITIDO")
+
+
+------------
+
+
 
 Atalhos:
 

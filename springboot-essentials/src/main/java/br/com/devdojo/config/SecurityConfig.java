@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
 
 import static br.com.devdojo.config.SecurityConstants.SIGN_UP_URL;
 
@@ -35,8 +36,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure (HttpSecurity http) throws Exception {
 
-        http.cors().and().csrf().disable().authorizeRequests().
-                antMatchers(HttpMethod.GET, SIGN_UP_URL).permitAll()
+        http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())
+                //permitDefaultValues libera os endpoitns pra serem acessados atraves do navegador usando javascript. Caso eu na ofaca isso, o esquema de seguranca vai ficar travando requisicoes
+                //de navegadores
+                .and().csrf().disable()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
                 .antMatchers("/*/protected/**").hasRole("USER")
                 .antMatchers("/*/admin/**").hasRole("ADMIN")
                 .and()

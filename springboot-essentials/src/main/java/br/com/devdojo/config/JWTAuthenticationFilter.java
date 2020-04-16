@@ -4,6 +4,8 @@ import br.com.devdojo.model.DBUser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -22,6 +24,8 @@ import static br.com.devdojo.config.SecurityConstants.*;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
+    @Autowired
+    @Qualifier("authenticationManagerBean")
     private AuthenticationManager authenticationManager;
 
     public JWTAuthenticationFilter (AuthenticationManager authenticationManager) {
@@ -31,7 +35,12 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     public Authentication attemptAuthentication (HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
-            DBUser DBUser = new ObjectMapper().readValue(request.getInputStream(), br.com.devdojo.model.DBUser.class);
+            System.out.println("parametro "+request.getParameter("username"));
+
+            DBUser DBUser = new ObjectMapper().readValue(request.getInputStream(), DBUser.class);
+            System.out.println("JWTAuthenticationFilter "+DBUser.getUsername()+DBUser.getPassword());
+
+            System.out.println("new UsernamePasswordAuthenticationToken(DBUser.getUsername(), DBUser.getPassword()) "+new UsernamePasswordAuthenticationToken(DBUser.getUsername(), DBUser.getPassword()));
             return this.authenticationManager
                     .authenticate(new UsernamePasswordAuthenticationToken(DBUser.getUsername(), DBUser.getPassword()));
         } catch (IOException e) {
@@ -50,7 +59,11 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .signWith(SignatureAlgorithm.HS512, SECRET)
                 .compact();
 
-        response.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
+        String bearerToken = TOKEN_PREFIX + token;
+
+        response.getWriter().write(bearerToken); //coloca o token no body pra facilitar a vida do frontend
+        response.addHeader(HEADER_STRING, bearerToken);
 
     }
 }
+

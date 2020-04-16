@@ -25,6 +25,13 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername (String username) throws UsernameNotFoundException {
+
+        System.out.println("username CustomUserDetailsService "+username);
+
+        DBUser asda =userRepository.findByUsername(username);
+
+        System.out.println("todos: "+userRepository.findAll());
+
         DBUser DBUser = Optional.ofNullable(userRepository.findByUsername(username))
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
