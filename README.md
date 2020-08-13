@@ -22,3 +22,11 @@
 
 * Nada disso seria possível sem o canal [DevDojo](https://www.youtube.com/channel/UCjF0OccBT05WxsJb2zNkL4g)
 
+# Qual o próximo passo?
+
+Depois de concluir esse curso, não deixe de conferir o curso de **Spring Boot Microservices**, também do [DevDojo](https://www.youtube.com/channel/UCjF0OccBT05WxsJb2zNkL4g).
+Nos dias atuais, saber essa arquitetura pode ser *gaming changing* em uma oportunidade de emprego.
+
+Eu também tenho um [repositório](https://github.com/MarcosVMoreira/Spring-Boot-Microservices) com o código deste curso. Todavia, o **código disponibilizado** pelo autor do curso **já está atualizado**, por ser relativamente recente. Portanto, **você não sofrerá com incompatibilidades**.
+
+
